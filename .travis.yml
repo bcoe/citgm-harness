@@ -1,0 +1,38 @@
+language: node_js
+sudo: true
+os:
+  - linux
+  - osx
+env:
+  - NIGHTLY=1
+  - NODE_VERSION=4
+  - NODE_VERSION=6
+before_install:
+  - |
+    if [ -n "$NIGHTLY" ]; then
+      npm i json -g
+      if [ "$TRAVIS_OS_NAME" = "osx" ]; then
+        export OS=darwin
+      else
+        export OS=linux
+      fi
+      export LATEST=`curl --silent -XGET https://nodejs.org/download/nightly/index.json | json 1.version`
+      export TARBALL="node-${LATEST}-${OS}-x64.tar.gz"
+      echo "https://nodejs.org/download/nightly/${LATEST}/${TARBALL}"
+
+      curl -XGET "https://nodejs.org/download/nightly/${LATEST}/${TARBALL}" > "/tmp/${TARBALL}"
+      tar -xvf "/tmp/${TARBALL}"
+      sudo ln -sf "$PWD/node-${LATEST}-${OS}-x64/bin/node" /usr/local/bin/node
+      sudo ln -sf "$PWD/node-${LATEST}-${OS}-x64/bin/npm" /usr/local/bin/npm
+
+      nvm deactivate
+      sudo npm i node-gyp -g
+    else
+      nvm install $NODE_VERSION
+      nvm use $NODE_VERSION
+      npm i node-gyp -g
+    fi
+  - node --version
+  - npm --version
+install: npm install
+script: ./node_modules/.bin/citgm yargs

@@ -1,0 +1,30 @@
+{
+  "name": "citgm-harness",
+  "version": "1.0.0",
+  "description": "harness for running Canary in the Gold Mine builds",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bcoe/citgm-harness.git"
+  },
+  "keywords": [
+    "harness",
+    "citgm",
+    "build"
+  ],
+  "author": "Ben Coe <ben@npmjs.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bcoe/citgm-harness/issues"
+  },
+  "homepage": "https://github.com/bcoe/citgm-harness#readme",
+  "devDependencies": {
+    "standard": "^7.1.0"
+  },
+  "dependencies": {
+    "citgm": "^1.2.1"
+  }
+}
